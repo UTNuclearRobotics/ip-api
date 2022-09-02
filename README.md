@@ -18,7 +18,7 @@ IP_API_KEY: 'your API Key'
 The following are useful to add to your .bashrc script:
 
 ```
-export IP_API_DIR="{THIS DIRECTORY}"
+export IP_API_DIR="THIS_DIRECTORY"
 
 alias iplocal='python ${IP_API_DIR}/ip-api.py local'
 alias iplist='python ${IP_API_DIR}/ip-api.py list'
@@ -28,7 +28,7 @@ alias ipupdate='python ${IP_API_DIR}/ip-api.py update'
 
 For the remote machine:
 ```
-export ROS_MASTER_URI=http://$(iplookup {robot-hostname}):11311
+export ROS_MASTER_URI=http://$(iplookup ROBOT_HOSTNAME):11311
 export ROS_IP=$(iplocal)
 ```
 
@@ -49,3 +49,6 @@ If you set up the bash aliases, the following commands are available to you:
 `iplookup {hostname}` returns the ip address of the specified hostname if it is stored in the database
 
 `ipupdate` updates your hostname and ip address in the database
+
+These can be used with other commands, for example:
+`ping $(iplookup ROBOT_HOSTNAME)`
