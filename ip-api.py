@@ -5,7 +5,7 @@ import sys
 import subprocess
 from socket import gethostname
 
-with open("config.yaml", "r") as stream:
+with open(os.path.abspath(os.path.dirname(__file__)) + "/config.yaml", "r") as stream:
     try:
         config = yaml.safe_load(stream)
         data_source = config['CLUSTER']
