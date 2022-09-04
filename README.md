@@ -1,6 +1,6 @@
 # IP-API
 
-This is a simple API to interact with a MongoDB database to store and lookup IP addresses based on a machine's hostname. This is intended for storing and querying ROS IPs to make remote connections easier to set up.
+This is a simple API to interact with a MongoDB database to store and lookup IP addresses based on a machine's hostname. This is intended for storing and querying ROS IPs to make remote connections easier to set up (specifically when robot IPs are not static).
 
 NOTE: If multiple machines have the same hostname there will be conflicts. Right now this only supports having unique hostnames.
 
@@ -13,14 +13,17 @@ First install any required packages:
 Next enter your MongoDB data API endpoint URL and API key in `config.yaml`
 
 ```
-IP_API_ENDPOINT: 'your API endpoint'
-IP_API_KEY: 'your API Key'
+CLUSTER: 'your cluster name'
+DATABASE: 'your database name'
+COLLECTION: 'your collection name'
+DATA_API_ENDPOINT: 'your API endpoint'
+DATA_API_KEY: 'your API Key'
 ```
 
 The following are useful to add to your .bashrc script (please modify the directory path to where you clone this repository):
 
 ```
-export IP_API_DIR="THIS_DIRECTORY_PATH"
+export IP_API_DIR='THIS_DIRECTORY_PATH'
 
 alias iplocal='python ${IP_API_DIR}/ip-api.py local'
 alias iplist='python ${IP_API_DIR}/ip-api.py list'
@@ -34,7 +37,7 @@ export ROS_MASTER_URI=http://$(iplookup ROBOT_HOSTNAME):11311
 export ROS_IP=$(iplocal)
 ```
 
-For the onboard machine:
+For the onboard machine (recommended to put this in a startup script):
 ```
 ipupdate # update robot's hostname and ip in database
 export ROS_MASTER_URI=http://$(iplocal):11311

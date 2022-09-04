@@ -1,2 +1,5 @@
-IP_API_ENDPOINT: 'your API endpoint'
-IP_API_KEY: 'your API Key'
+CLUSTER: 'your cluster name'
+DATABASE: 'your database name'
+COLLECTION: 'your collection name'
+DATA_API_ENDPOINT: 'your API endpoint'
+DATA_API_KEY: 'your API Key'
