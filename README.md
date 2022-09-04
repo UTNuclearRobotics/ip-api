@@ -6,13 +6,19 @@ NOTE: If multiple machines have the same hostname there will be conflicts. Right
 
 ## Setup
 
-First install any required packages:
+Clone the repository and install required packages:
 
-`pip install -r requirements.txt`
+```bash
+git clone git@github.com:UTNuclearRobotics/ip-api.git
+cd ip-api/
+sudo apt update
+sudo apt install net-tools
+pip install -r requirements.txt
+```
 
 Next enter your MongoDB database information in `config.yaml` (NRG users see: https://wikis.utexas.edu/x/l47xFg)
 
-```
+```yaml
 CLUSTER: 'your cluster name'
 DATABASE: 'your database name'
 COLLECTION: 'your collection name'
@@ -20,9 +26,9 @@ DATA_API_ENDPOINT: 'your API endpoint'
 DATA_API_KEY: 'your API Key'
 ```
 
-The following are useful to add to your .bashrc script (please modify the directory path to where you clone this repository):
+The following are useful to add to your .bashrc script. Modify the directory path to where you clone this repository and use `python3` instead of `python` if necessary.
 
-```
+```bash
 export IP_API_DIR='THIS_DIRECTORY_PATH'
 
 alias iplocal='python ${IP_API_DIR}/ip-api.py local'
@@ -31,29 +37,29 @@ alias iplookup='python ${IP_API_DIR}/ip-api.py lookup'
 alias ipupdate='python ${IP_API_DIR}/ip-api.py update'
 ```
 
-For the remote machine:
-```
-export ROS_MASTER_URI=http://$(iplookup ROBOT_HOSTNAME):11311
+For the onboard machine (recommended to put this in a startup script):
+```bash
+ipupdate # update robot's hostname and ip in database
+export ROS_MASTER_URI=http://$(iplocal):11311
 export ROS_IP=$(iplocal)
 ```
 
-For the onboard machine (recommended to put this in a startup script):
-```
-ipupdate # update robot's hostname and ip in database
-export ROS_MASTER_URI=http://$(iplocal):11311
+For the remote machine:
+```bash
+export ROS_MASTER_URI=http://$(iplookup ROBOT_HOSTNAME):11311
 export ROS_IP=$(iplocal)
 ```
 
 ## Usage
 If you set up the bash aliases, the following commands are available to you:
 
-`iplocal` returns your local ip address without any other information. Equivalent to `python ip-api.py local`.
+1. `iplocal` returns your local ip address. Equivalent to `python ip-api.py local`.
 
-`iplist` lists all hostnames and ip addresses in the database. Equivalent to `python ip-api.py list`
+2. `iplist` lists all hostnames and ip addresses in the database. Equivalent to `python ip-api.py list`
 
-`iplookup (hostname)` returns the ip address of the specified hostname if it is stored in the database. Equivalent to `python ip-api.py lookup (hostname)`.
+3. `iplookup (hostname)` returns the ip address of the specified hostname if available. Equivalent to `python ip-api.py lookup (hostname)`.
 
-`ipupdate` updates your hostname and ip address in the database. Equivalent to `python ip-api.py update`.
+4. `ipupdate` updates your hostname and ip address in the database. Equivalent to `python ip-api.py update`.
 
 These can be used with other commands, for example:
 `ping $(iplookup hostname)`
