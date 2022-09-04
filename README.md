@@ -1,6 +1,6 @@
 # IP-API
 
-This is a simple API to interact with a MongoDB database to store and lookup IP addresses based on a machine's hostname. This is intended for storing and querying ROS IPs to make remote connections easier to set up (specifically when robot IPs are not static).
+This is a simple API to interact with a MongoDB database to store and lookup IP addresses based on a machine's hostname. This is intended for storing and querying ROS IPs to make remote connections easier to set up (specifically when robot IPs are not static). This uses MongoDB Data API endpoints; the setup will assume you have a MongoDB collection set up with a Data API endpoint and key (see https://www.mongodb.com/docs/atlas/app-services/data-api/generated-endpoints/ for more information)
 
 NOTE: If multiple machines have the same hostname there will be conflicts. Right now this only supports having unique hostnames.
 
@@ -10,7 +10,7 @@ First install any required packages:
 
 `pip install -r requirements.txt`
 
-Next enter your MongoDB data API endpoint URL and API key in `config.yaml`
+Next enter your MongoDB database information in `config.yaml` (NRG users see: https://wikis.utexas.edu/x/l47xFg)
 
 ```
 CLUSTER: 'your cluster name'
