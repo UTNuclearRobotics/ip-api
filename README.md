@@ -26,7 +26,7 @@ DATA_API_ENDPOINT: 'your API endpoint'
 DATA_API_KEY: 'your API Key'
 ```
 
-The following are useful to add to your .bashrc script. Modify the directory path to where you clone this repository and use `python3` instead of `python` if necessary.
+The following are useful to add to your `.bashrc` script. Modify the directory path to where you clone this repository and use python3 instead of python if necessary.
 
 ```bash
 export IP_API_DIR='THIS_DIRECTORY_PATH'
