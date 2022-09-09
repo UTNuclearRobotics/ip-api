@@ -78,6 +78,21 @@ def update():
         print("Updated lookup table with", hostname, ":", ip)
 
 
+def invalidate(hostname=None):
+    if not hostname:
+        hostname = gethostname()
+    data = {
+        "dataSource": data_source,
+        "database": database,
+        "collection": collection,
+        "filter": {"name": hostname}
+    }
+
+    response = request("deleteOne", data)
+    if response.status_code == 200:
+        print("Invalidated", hostname, "in database")
+
+
 if __name__ == '__main__':
     if (len(sys.argv) > 1):
         command = os.path.basename(sys.argv[1])
@@ -91,5 +106,10 @@ if __name__ == '__main__':
                 lookup(sys.argv[2])
         elif command == 'update':
             update()
+        elif command == 'invalidate':
+            if len(sys.argv) > 2:
+                invalidate(sys.argv[2])
+            else:
+                invalidate()
         else:
             print("Invalid command")

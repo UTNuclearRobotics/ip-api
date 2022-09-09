@@ -26,25 +26,31 @@ DATA_API_ENDPOINT: 'your API endpoint'
 DATA_API_KEY: 'your API Key'
 ```
 
-The following are useful to add to your `.bashrc` script. Modify the directory path to where you clone this repository and use python3 instead of python if necessary.
+The following are useful to add to your `.bashrc` script. Modify the directory path to where you clone this repository and use python instead of python3 if necessary.
 
 ```bash
 export IP_API_DIR='THIS_DIRECTORY_PATH'
 
-alias iplocal='python ${IP_API_DIR}/ip-api.py local'
-alias iplist='python ${IP_API_DIR}/ip-api.py list'
-alias iplookup='python ${IP_API_DIR}/ip-api.py lookup'
-alias ipupdate='python ${IP_API_DIR}/ip-api.py update'
+alias iplocal='python3 ${IP_API_DIR}/ip-api.py local'
+alias iplist='python3 ${IP_API_DIR}/ip-api.py list'
+alias iplookup='python3 ${IP_API_DIR}/ip-api.py lookup'
+alias ipupdate='python3 ${IP_API_DIR}/ip-api.py update'
+alias ipinvalidate='python3 ${IP_API_DIR}/ip-api.py invalidate'
 ```
 
-For the onboard machine (recommended to put this in a startup script):
+Run these two commands to automatically update onboard machine's ip on network connections:
 ```bash
-ipupdate # update robot's hostname and ip in database
+echo -e '#!/bin/sh'"\n/usr/bin/python3 ${IP_API_DIR}/ip-api.py update" | sudo tee /etc/network/if-up.d/ip-api-update
+sudo chmod +x /etc/network/if-up.d/ip-api-update
+```
+
+For the onboard machine once connected via SSH (this can be added to .bashrc or create an alias with these):
+```bash
 export ROS_MASTER_URI=http://$(iplocal):11311
 export ROS_IP=$(iplocal)
 ```
 
-For the remote machine:
+For the remote machine (can be added to .bashrc but may require re-sourcing if robot hasn't updated its ip address yet):
 ```bash
 export ROS_MASTER_URI=http://$(iplookup ROBOT_HOSTNAME):11311
 export ROS_IP=$(iplocal)
@@ -53,13 +59,15 @@ export ROS_IP=$(iplocal)
 ## Usage
 If you set up the bash aliases, the following commands are available to you:
 
-1. `iplocal` returns your local ip address. Equivalent to `python ip-api.py local`.
+1. `iplocal` returns your local ip address. Equivalent to `python3 ip-api.py local`.
 
-2. `iplist` lists all hostnames and ip addresses in the database. Equivalent to `python ip-api.py list`
+2. `iplist` lists all hostnames and ip addresses in the database. Equivalent to `python3 ip-api.py list`
 
-3. `iplookup (hostname)` returns the ip address of the specified hostname if available. Equivalent to `python ip-api.py lookup (hostname)`.
+3. `iplookup (hostname)` returns the ip address of the specified hostname if available. Equivalent to `python3 ip-api.py lookup (hostname)`.
 
-4. `ipupdate` updates your hostname and ip address in the database. Equivalent to `python ip-api.py update`.
+4. `ipupdate` updates your hostname and ip address in the database. Equivalent to `python3 ip-api.py update`.
+
+5. `ipinvalidate (optional=hostname)` invalidates your hostname (or the one given as an argument) in the database. Equivalent to `python3 ip-api.py invalidate (optional=hostname)`.
 
 These can be used with other commands, for example:
 `ping $(iplookup hostname)`
