@@ -38,7 +38,7 @@ alias ipupdate='python3 ${IP_API_DIR}/ip-api.py update'
 alias ipinvalidate='python3 ${IP_API_DIR}/ip-api.py invalidate'
 ```
 
-Run these two commands to automatically update onboard machine's ip on network connections:
+Run these two commands on the onboard machine to automatically update onboard machine's ip on network connections:
 ```bash
 echo -e '#!/bin/sh'"\n/usr/bin/python3 ${IP_API_DIR}/ip-api.py update" | sudo tee /etc/network/if-up.d/ip-api-update
 sudo chmod +x /etc/network/if-up.d/ip-api-update
