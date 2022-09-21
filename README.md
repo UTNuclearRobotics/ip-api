@@ -26,7 +26,7 @@ DATA_API_ENDPOINT: 'your API endpoint'
 DATA_API_KEY: 'your API Key'
 ```
 
-The following are useful to add to your `.bashrc` script. Modify the directory path to where you clone this repository and use python instead of python3 if necessary.
+Add the following to your `.bashrc` script. Modify the directory path to where you clone this repository and use python instead of python3 if necessary.
 
 ```bash
 export IP_API_DIR='THIS_DIRECTORY_PATH'
@@ -37,6 +37,8 @@ alias iplookup='python3 ${IP_API_DIR}/ip-api.py lookup'
 alias ipupdate='python3 ${IP_API_DIR}/ip-api.py update'
 alias ipinvalidate='python3 ${IP_API_DIR}/ip-api.py invalidate'
 ```
+
+Resource your .bashrc before continuing.
 
 Run these two commands on the onboard machine to automatically update onboard machine's ip on network connections:
 ```bash
